@@ -22,8 +22,12 @@ class AppEndpoint {
   static const String UPLOAD_AVATAR = '/upload/avatar/';
   static const String UPLOAD_BACKGROUND = '/upload/background/';
 
+  //Authentication
   static const String LOGIN_NORMAL = '/auth/loginNormal';
   static const String REGISTER = '/auth/register';
   static const String LOGIN_SOCIAL = '/auth/loginSocial';
   static const String AUTHORIZED = '/auth/authorized';
+
+  //User
+  static const String USER_GET_ALL = 'user/getAll';
 }
