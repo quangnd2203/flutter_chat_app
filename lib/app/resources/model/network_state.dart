@@ -11,7 +11,7 @@ typedef NetworkStateConverter<T> = T Function(dynamic json);
 class NetworkState<T> {
   NetworkState({this.message, this.data, this.status});
 
-  factory NetworkState.fromResponse(Response<T> response, {NetworkStateConverter<T>? converter, T? value, String? prefix}) {
+  factory NetworkState.fromResponse(Response<dynamic> response, {NetworkStateConverter<T>? converter, T? value, String? prefix}) {
     try {
       final dynamic json = jsonDecode(jsonEncode(response.data));
       return NetworkState<T>._fromJson(
@@ -38,7 +38,7 @@ class NetworkState<T> {
         data = converter != null && json[prefix] != null ? converter(json[prefix] as Map<String, dynamic>) : json[prefix] as T?;
       }
     } else {
-      data = converter != null && json['data'] != null ? converter(json['data'] as Map<String, dynamic>) : json['data'] as T?;
+      data = converter != null && json['data'] != null ? converter(json['data']) : json['data'] as T?;
     }
   }
 

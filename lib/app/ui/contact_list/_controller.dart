@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../resources/repository/user_repository.dart';
 import '../../resources/resources.dart';
-import '../../routes/app_pages.dart';
 import '../ui.dart';
 
 class ContactListController extends BaseController {
@@ -22,9 +22,8 @@ class ContactListController extends BaseController {
   }
 
   Future<List<UserModel>> getUsers(int offset) async {
-    // final NetworkState<List<UserModel>> networkState = await UserRepository().getUsers(offset: offset);
-    // return networkState.data ?? <UserModel>[];
-    return [];
+    final NetworkState<Iterable<UserModel>> networkState = await UserRepository().getAll(offset: offset);
+    return (networkState.data ?? <UserModel>[]).toList();
   }
 
   Future<void> createConversation(UserModel userModel) async {

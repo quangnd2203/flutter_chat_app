@@ -2,6 +2,7 @@ import 'package:get/get.dart';
 
 import '../../resources/resources.dart';
 import '../../routes/app_pages.dart';
+import '../../utils/utils.dart';
 import '../ui.dart';
 
 class SplashController extends BaseController {
@@ -10,6 +11,7 @@ class SplashController extends BaseController {
     super.onInit();
     await getConfig();
     await getProfile();
+    // autoRegisterAccount(50);
   }
 
   Future<void> getConfig() async {}
@@ -20,6 +22,13 @@ class SplashController extends BaseController {
       Get.offAndToNamed(Routes.NAVIGATION);
     } else {
       Get.offAndToNamed(Routes.LOGIN_REGISTER);
+    }
+  }
+
+  Future<void> autoRegisterAccount(int count) async {
+    for(int i = 0; i < count; i++){
+      final Map<String, String> account = AppEmail().createEmailAndName();
+      AuthRepository().register(name: account['name']!, email: account['email']!, password: 'Aa22032001!');
     }
   }
 }

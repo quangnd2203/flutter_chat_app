@@ -14,21 +14,24 @@ class UserRepository{
 
   static UserRepository? _instance;
 
-  Future<NetworkState<Iterable<UserModel>>> getAll() async {
+  Future<NetworkState<List<UserModel>>> getAll({int limit = 20, offset = 0}) async {
     final bool isDisconnect = await WifiService.isDisconnect();
     if (isDisconnect) {
-      return NetworkState<Iterable<UserModel>>.withDisconnect();
+      return NetworkState<List<UserModel>>.withDisconnect();
     }
     try{
       const String api = AppEndpoint.USER_GET_ALL;
-      final Response<Iterable<UserModel>> response = await AppClients().get(api);
-      final NetworkState<Iterable<UserModel>> state = NetworkState<Iterable<UserModel>>.fromResponse(
+      final Response<dynamic> response = await AppClients().get(api, queryParameters: <String, dynamic>{
+        'limit': limit,
+        'offset': offset,
+      });
+      final NetworkState<List<UserModel>> state = NetworkState<List<UserModel>>.fromResponse(
           response,
-          converter: (dynamic json) => (json as Iterable).map<UserModel>((e) => UserModel.fromJson(e)),
+          converter: (dynamic json) => (json as List).map<UserModel>((e) => UserModel.fromJson(e)).toList(),
       );
       return state;
     }on DioError catch (e){
-      return NetworkState<Iterable<UserModel>>.withError(e);
+      return NetworkState<List<UserModel>>.withError(e);
     }
   }
 }

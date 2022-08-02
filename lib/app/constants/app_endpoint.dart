@@ -29,5 +29,8 @@ class AppEndpoint {
   static const String AUTHORIZED = '/auth/authorized';
 
   //User
-  static const String USER_GET_ALL = 'user/getAll';
+  static const String USER_GET_ALL = '/user/getAll';
+
+  //Conversation
+  static const String CREATE_CONVERSATION = '/conversation/createConversation';
 }
