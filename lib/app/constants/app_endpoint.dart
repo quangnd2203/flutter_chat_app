@@ -1,8 +1,12 @@
 class AppEndpoint {
   AppEndpoint._();
+  static const String BASE = 'http://localhost:4000';
 
   static const String BASE_URL_DEV = 'http://192.168.1.203:3000/api';
   static const String BASE_URL_PROD = 'http://192.168.1.203:3000/api';
+
+  static const String BASE_SOCKET = 'http://192.168.1.203:4000';
+
   static const String BASE_MEDIA = 'https://backendlessappcontent.com/2D866C83-7891-28FE-FF30-B43753E33600/90F5F65B-EA5B-45D0-A9A5-EE84A0880701/files';
 
   static const String TEST_API = 'https://jsonplaceholder.typicode.com/posts';
@@ -31,6 +35,4 @@ class AppEndpoint {
   //User
   static const String USER_GET_ALL = '/user/getAll';
 
-  //Conversation
-  static const String CREATE_CONVERSATION = '/conversation/createConversation';
 }

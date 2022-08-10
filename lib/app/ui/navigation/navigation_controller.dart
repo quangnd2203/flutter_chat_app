@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../notification/firebase_messaging.dart';
 import '../../resources/resources.dart';
+import '../../resources/service/socket_service.dart';
 import '../../routes/app_pages.dart';
 import '../../utils/utils.dart';
 import '../ui.dart';
@@ -20,6 +21,7 @@ class NavigationController extends BaseController {
   @override
   Future<void> onInit() async {
     super.onInit();
+    SocketService();
     FirebaseCloudMessaging.subscribeToTopic('conversation-${AppPrefs.user!.uid!}');
   }
 
