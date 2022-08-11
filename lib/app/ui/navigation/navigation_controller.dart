@@ -1,4 +1,4 @@
-// ignore_for_file: always_specify_types, strict_raw_type
+// ignore_for_file: always_specify_types, strict_raw_type, cancel_subscriptions, always_put_control_body_on_new_line
 
 import 'dart:async';
 import 'package:flutter/material.dart';
@@ -18,10 +18,11 @@ class NavigationController extends BaseController {
 
   GlobalKey<WidgetSliverLoadMoreVerticalState> messageLoadMoreKey = GlobalKey();
 
+  SocketService socketService = SocketService();
+
   @override
   Future<void> onInit() async {
     super.onInit();
-    SocketService();
     FirebaseCloudMessaging.subscribeToTopic('conversation-${AppPrefs.user!.uid!}');
   }
 
@@ -32,5 +33,10 @@ class NavigationController extends BaseController {
     await Future.delayed(const Duration(milliseconds: 500));
     AppPrefs.accessToken = null;
     AppPrefs.user = null;
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
   }
 }

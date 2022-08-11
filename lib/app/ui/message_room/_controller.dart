@@ -24,7 +24,7 @@ class MessageRoomController extends BaseController {
     onScrollControllerListener();
     super.onInit();
     setLoading(false);
-    AppPrefs.newConversations = List<String>.from(AppPrefs.newConversations)..removeWhere((String e) => e == conversation!.conversationId);
+    // AppPrefs.newConversations = List<String>.from(AppPrefs.newConversations)..removeWhere((String e) => e == conversation!.conversationId);
   }
 
   Future<List<MessageModel>> getMessageOfConversation() async {
@@ -59,13 +59,13 @@ class MessageRoomController extends BaseController {
   }
 
   void onNotificationReceiver(){
-    notificationSubject.listen((Data? event) {
-      if(event?.type == 'message'){
-        final MessageNotification messageNotification = event!.data as MessageNotification;
-        if(messageNotification.message!.conversation!.conversationId == conversation!.conversationId){
-          _messages.insert(0, messageNotification.message!);
-        }
-      }
-    });
+    // notificationSubject.listen((Data? event) {
+    //   if(event?.type == 'message'){
+    //     final MessageNotification messageNotification = event!.data as MessageNotification;
+    //     if(messageNotification.message!.conversation!.conversationId == conversation!.conversationId){
+    //       _messages.insert(0, messageNotification.message!);
+    //     }
+    //   }
+    // });
   }
 }

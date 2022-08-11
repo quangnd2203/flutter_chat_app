@@ -35,4 +35,7 @@ class AppEndpoint {
   //User
   static const String USER_GET_ALL = '/user/getAll';
 
+  //Conversation
+  static const String CONVERSATION_GET_ALL = '/conversation/getAll';
+
 }

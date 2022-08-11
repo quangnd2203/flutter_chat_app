@@ -2,6 +2,7 @@
 
 import 'package:custom_navigation_bar/custom_navigation_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import '../../constants/constants.dart';
 import '../ui.dart';
 

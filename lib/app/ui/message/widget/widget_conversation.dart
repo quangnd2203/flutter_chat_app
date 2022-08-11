@@ -1,3 +1,5 @@
+// ignore_for_file: iterable_contains_unrelated_type
+
 import 'package:flutter/material.dart';
 
 import '../../../constants/constants.dart';
@@ -22,8 +24,7 @@ class WidgetConversation extends StatelessWidget {
     return '${conversation.lastMessage!.user!.uid != partner.uid ? 'Bạn: ' : ''}${conversation.lastMessage!.text!}';
   }
 
-  bool get isNew =>
-      AppPrefs.newConversations.contains(conversation.conversationId);
+  bool get isNew => AppPrefs.newConversations.contains(conversation.id);
 
   @override
   Widget build(BuildContext context) {
@@ -80,8 +81,7 @@ class WidgetConversation extends StatelessWidget {
                     padding: const EdgeInsets.only(top: 4),
                     child: Text(
                       AppUtils.getTimePeriod(AppUtils.convertString2DateTime(
-                          conversation.lastMessage!.created,
-                          format: 'yyyy-MM-dd HH:mm:SS.SSS')!),
+                          conversation.lastMessage!.createdAt)!),
                       style: AppTextStyles.normalRegular.copyWith(fontSize: 12),
                     ),
                   )

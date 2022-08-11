@@ -1,55 +1,61 @@
+// ignore_for_file: avoid_dynamic_calls
+
 import '../resources.dart';
 
-/// conversationId : "test"
+/// id : 55
 /// lastMessage : null
-/// ownerId : null
-/// objectId : "A9515F45-B9EC-46EF-88A8-5BF50C932D2D"
-/// users : [{"created":1655707220569,"accountType":"normal","accessToken":"dWlkLTE2NTU3MDcyMTExNTk1NTZ1aWQtMTY1NTcwNzIxMTE1OTYwMnVpZC0xNjU1NzA3MjExMTU5NjExdWlkLTE2NTU3MDcyMTExNTk2MTd1aWQtMTY1NTcwNzIxMTE1OTYyM3VpZC0xNjU1NzA3MjExMTU5NjI5dWlkLTE2NTU3MDcyMTExNTk2MzV1aWQtMTY1NTcwNzIxMTE1OTY0M3VpZC0xNjU1NzA3MjExMTU5NjQ5","isNewUser":false,"ownerId":null,"uid":"uid-1655707211159676","password":"8c389f79e7d90ba088d7a2b05ef6ef6a29cb642110695fa0a7dc45f139cc4882","name":"Laura Adams","___class":"User","updated":1655713874921,"fcmToken":null,"email":"laura_adams_92584019@@gmail.com","objectId":"8F723B31-F221-446B-920E-7DE0E4C1930E"},{"created":1655707220645,"accountType":"normal","accessToken":"dWlkLTE2NTU3MDcyMTEzMjczODB1aWQtMTY1NTcwNzIxMTMyNzQyMXVpZC0xNjU1NzA3MjExMzI3NDI5dWlkLTE2NTU3MDcyMTEzMjc0MzV1aWQtMTY1NTcwNzIxMTMyNzQ0M3VpZC0xNjU1NzA3MjExMzI3NDQ5dWlkLTE2NTU3MDcyMTEzMjc0NTR1aWQtMTY1NTcwNzIxMTMyNzQ2MXVpZC0xNjU1NzA3MjExMzI3NDY3","isNewUser":false,"ownerId":null,"uid":"uid-1655707211327490","password":"8c389f79e7d90ba088d7a2b05ef6ef6a29cb642110695fa0a7dc45f139cc4882","name":"Cheryl Peterson","___class":"User","updated":1655713874921,"fcmToken":null,"email":"cheryl_peterson_84758271@@gmail.com","objectId":"A097B820-51DA-4692-A96C-B431C72AD054"}]
+/// users : [{"id":436,"uid":"uid-b215d4bc-0f0d-11ed-903b-c6ef0857e0cf","name":"Nguyen Dang Quang","email":"quangnd.nta@gmail.com","accountType":"normal","avatar":null,"background":null,"createdAt":"2022-07-29T07:11:41.000Z","updatedAt":"2022-08-10T02:33:17.000Z"},{"id":437,"uid":"uid-41eb2d84-0f0f-11ed-903b-c6ef0857e0cf","name":"Kathleen Mitchell","email":"kathleen.mitchell.54195562@gmail.com","accountType":"normal","avatar":null,"background":null,"createdAt":"2022-07-29T07:22:52.000Z","updatedAt":"2022-07-29T07:22:52.000Z"}]
+/// createdAt : "2022-08-09T08:59:02.000Z"
+/// updatedAt : null
 
 class ConversationModel {
   ConversationModel({
-    this.conversationId,
-    this.lastMessage,
-    this.objectId,
-    this.users,
-  });
+      this.id, 
+      this.lastMessage, 
+      this.users, 
+      this.createdAt, 
+      this.updatedAt,});
 
-  ConversationModel.fromJson(Map<String, dynamic> json) {
-    conversationId = json['conversationId'] as String?;
-    lastMessage = json['lastMessage'] != null
-        ? MessageModel.fromJson(Map<String, dynamic>.from(
-            json['lastMessage'] as Map<dynamic, dynamic>))
-        : null;
-    objectId = json['objectId'] as String?;
-    users = UserModel.listToJson(json['users']);
+  ConversationModel.fromJson(dynamic json) {
+    id = json['id'] as int?;
+    lastMessage =  json['lastMessage'] != null ? MessageModel.fromJson(json['lastMessage']) : null;
+    if (json['users'] != null) {
+      users = [];
+      json['users'].forEach((dynamic v) {
+        users?.add(UserModel.fromJson(v));
+      });
+    }
+    createdAt = json['createdAt'] as String?;
+    updatedAt = json['updatedAt'] as String?;
   }
-
-  String? conversationId;
+  int? id;
   MessageModel? lastMessage;
-  String? objectId;
   List<UserModel>? users;
+  String? createdAt;
+  String? updatedAt;
 
-  ConversationModel copyWith({
-    String? conversationId,
-    MessageModel? lastMessage,
-    String? objectId,
-    List<UserModel>? users,
-  }) =>
-      ConversationModel(
-        conversationId: conversationId ?? this.conversationId,
-        lastMessage: lastMessage ?? this.lastMessage,
-        objectId: objectId ?? this.objectId,
-        users: users ?? this.users,
-      );
+ConversationModel copyWith({  int? id,
+  MessageModel? lastMessage,
+  List<UserModel>? users,
+  String? createdAt,
+  String? updatedAt,
+}) => ConversationModel(  id: id ?? this.id,
+  lastMessage: lastMessage ?? this.lastMessage,
+  users: users ?? this.users,
+  createdAt: createdAt ?? this.createdAt,
+  updatedAt: updatedAt ?? this.updatedAt,
+);
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> map = <String, dynamic>{};
-    map['conversationId'] = conversationId;
-    map['lastMessage'] = lastMessage?.toJson();
-    map['objectId'] = objectId;
+    map['id'] = id;
+    map['lastMessage'] = lastMessage;
     if (users != null) {
-      map['users'] = users?.map((UserModel? v) => v?.toJson()).toList();
+      map['users'] = users?.map((v) => v.toJson()).toList();
     }
+    map['createdAt'] = createdAt;
+    map['updatedAt'] = updatedAt;
     return map;
   }
+
 }

@@ -57,12 +57,12 @@ class FirebaseCloudMessaging {
       case 'message':
         final List<String> localNewMessage = List<String>.from(AppPrefs.newConversations);
         payload = payload.copyWith(data: MessageNotification.fromJson(data));
-        final String conversationId = (payload.data as MessageNotification).message!.conversation!.conversationId!;
+        final String conversationId = (payload.data as MessageNotification).message!.conversationId!.toString();
         final UserModel userModel = (payload.data as MessageNotification).message!.user!;
         if (Get.currentRoute != Routes.MESSAGE_ROOM) {
           isShowNotification = true;
         } else {
-          isShowNotification = Get.find<MessageRoomController>().conversation!.conversationId != conversationId;
+          isShowNotification = Get.find<MessageRoomController>().conversation!.id != conversationId;
         }
         if(isShowNotification && userModel.uid != AppPrefs.user!.uid){
           AppPrefs.newConversations = localNewMessage..add(conversationId);

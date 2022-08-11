@@ -63,7 +63,7 @@ class _WidgetMessageItemState extends State<WidgetMessageItem> {
                     height: 4,
                   ),
                   Text(
-                    AppUtils.getTimePeriod(AppUtils.convertString2DateTime(widget.messageModel.created, format: 'yyyy-MM-dd HH:mm:SS.SSS')!),
+                    AppUtils.getTimePeriod(AppUtils.convertString2DateTime(widget.messageModel.createdAt)!),
                     style: AppTextStyles.normalRegular
                         .copyWith(color: AppColors.greyDark, fontSize: 14),
                   ),

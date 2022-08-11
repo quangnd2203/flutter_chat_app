@@ -2,6 +2,7 @@
 
 import 'dart:async';
 
+import 'package:get/get.dart';
 import 'package:logger/logger.dart';
 import 'package:socket_io_client/socket_io_client.dart';
 import '../../constants/app_endpoint.dart';
@@ -24,8 +25,6 @@ class SocketEventData{
   final dynamic data;
 }
 
-StreamController<SocketEventData> socketEventStream = StreamController<SocketEventData>();
-
 class SocketService {
 
   factory SocketService(){
@@ -40,6 +39,8 @@ class SocketService {
   late Socket _socket;
 
   final Logger _logger = Logger();
+
+  final GetStream<SocketEventData> socketEventStream = GetStream<SocketEventData>();
 
   bool isConnected = false;
 
@@ -71,13 +72,14 @@ class SocketService {
     });
   }
 
-  void onListenEvent(String event, SocketCallBackEvent callBackEvent){
-    socketEventStream.stream.listen((SocketEventData eventData) {
-      if(event == eventData.event)
-        callBackEvent(eventData.data);
-    });
+  void emit(String event, dynamic data){
+    _socket.emit(event, data);
   }
-  
+
+  void disconnect(){
+    _socket.emit('disconnect');
+  }
+
   void onConnecting(dynamic data){
     _logger.i('ON CONNECTING $data');
   }
