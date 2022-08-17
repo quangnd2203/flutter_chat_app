@@ -37,5 +37,5 @@ class AppEndpoint {
 
   //Conversation
   static const String CONVERSATION_GET_ALL = '/conversation/getAll';
-
+  static const String MESSAGE_GET_ALL = '/conversation/message';
 }

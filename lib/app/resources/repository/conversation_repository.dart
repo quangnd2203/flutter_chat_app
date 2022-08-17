@@ -36,4 +36,25 @@ class ConversationRepository{
       return NetworkState<List<ConversationModel>>.withError(e);
     }
   }
+
+  Future<NetworkState<List<MessageModel>>> getAllMessage({int limit = 20, offset = 0}) async {
+    final bool isDisconnect = await WifiService.isDisconnect();
+    if (isDisconnect) {
+      return NetworkState<List<MessageModel>>.withDisconnect();
+    }
+    try{
+      const String api = AppEndpoint.MESSAGE_GET_ALL;
+      final Response<dynamic> response = await AppClients().get(api, queryParameters: <String, dynamic>{
+        'limit': limit,
+        'offset': offset,
+      });
+      final NetworkState<List<MessageModel>> state = NetworkState<List<MessageModel>>.fromResponse(
+        response,
+        converter: (dynamic json) => (json as List).map<MessageModel>((e) => MessageModel.fromJson(e)).toList(),
+      );
+      return state;
+    }on DioError catch (e){
+      return NetworkState<List<MessageModel>>.withError(e);
+    }
+  }
 }
